@@ -96,9 +96,12 @@ def main():
                                     count = count + 1
                             else:
                                 print_colored("Failed to fetch channel list", "\033[91m")
-                            print_colored(f"MAC = {mac}\nExpiry = {expiry}\nChannels = {count}", "\033[92m")  # Green
-                            with open(f"{host}_{current}.txt", "a") as f:
-                                f.write(f"{base_url}/c/\nMAC = {mac}\nExpiry = {expiry}\nChannels = {count}\n\n")
+                            if count == 0:
+                                print_colored(f"There are no channels for mac: {mac}", "\033[91m")
+                            else:
+                                print_colored(f"MAC = {mac}\nExpiry = {expiry}\nChannels = {count}", "\033[92m")  # Green
+                                with open(f"{host}_{current}.txt", "a") as f:
+                                    f.write(f"{base_url}/c/\nMAC = {mac}\nExpiry = {expiry}\nChannels = {count}\n\n")
                 else:
                     print_colored(f"No JSON response for MAC {mac}", "\033[91m")  # Red
             except json.decoder.JSONDecodeError:
